@@ -133,6 +133,58 @@ document.getElementById("yesBtn").addEventListener("click",()=>{
     document.getElementById("page1").classList.add("hidden");
     document.getElementById("page2").classList.remove("hidden");
 });
+
+async function sendDiscordNotification(name, date, activity, timestamp) {
+    const webhookUrl = "https://discord.com/api/webhooks/1511585679618998404/M-G1DgrbiM8PmG7ZabIDUuaG2ulSPPa2bPRiUW7mCD0WZl8WavEwHWiv64716hjquqkM";
+    
+    const message = {
+        content: "🎉 New Date Proposal Response!",
+        embeds: [{
+            color: 0xff69b4,
+            fields: [
+                {
+                    name: "Name",
+                    value: name,
+                    inline: true
+                },
+                {
+                    name: "Date",
+                    value: date,
+                    inline: true
+                },
+                {
+                    name: "Activity",
+                    value: activity,
+                    inline: false
+                },
+                {
+                    name: "Timestamp",
+                    value: timestamp,
+                    inline: false
+                }
+            ]
+        }]
+    };
+
+    try {
+        const response = await fetch(webhookUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(message)
+        });
+        
+        if (response.ok) {
+            console.log("Discord notification sent successfully!");
+        } else {
+            console.error("Failed to send Discord notification");
+        }
+    } catch (error) {
+        console.error("Error sending Discord notification:", error);
+    }
+}
+
 function finishDate(){
     const name =
         document.getElementById("nameInput").value || "Future Date";
@@ -140,6 +192,11 @@ function finishDate(){
         document.getElementById("dateChoice").value;
     const activity =
         document.getElementById("activityChoice").value;
+    const timestamp = new Date().toLocaleString();
+    
+    // Send Discord notification
+    sendDiscordNotification(name, date, activity, timestamp);
+    
     document.getElementById("page2").classList.add("hidden");
     document.getElementById("page3").classList.remove("hidden");
     document.getElementById("finalMessage").innerHTML =
