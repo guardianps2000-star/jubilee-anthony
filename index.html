@@ -82,9 +82,9 @@ input{
 <h1>Excellent choice Princess Zhou 🙌🏽</h1>
 <p>Now choose when you'd like our date to be and what you'd like to do 🫡</p>
 <select id="dateChoice">
-    <option>Monday June 8th</option>
-    <option>Tuesday June 9th</option>
-    <option>Wednesday June 10th</option>
+    <option>Thursday June 11th</option>
+    <option>Friday June 12th</option>
+    <option>Saturday June 13th</option>
 </select>
 <select id="activityChoice">
     <option>Go watch a movie 🎬</option>
@@ -194,6 +194,9 @@ function finishDate(){
     
     // Send Discord notification
     sendDiscordNotification(name, date, activity, timestamp);
+    
+    // Show popup with love message
+    alert("By the way Anthony loves you LOTS 🙂");
     
     document.getElementById("page2").classList.add("hidden");
     document.getElementById("page3").classList.remove("hidden");
