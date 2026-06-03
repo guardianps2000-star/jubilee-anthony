@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Very Important Question</title>
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    overflow:hidden;
+}
+.container{
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    width:90%;
+    max-width:500px;
+}
+h1{
+    margin-bottom:20px;
+}
+button{
+    border:none;
+    padding:15px 30px;
+    margin:10px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:18px;
+    transition:.2s;
+}
+#yesBtn{
+    background:#4CAF50;
+    color:white;
+}
+#noBtn{
+    background:#f44336;
+    color:white;
+    position:relative;
+}
+.option{
+    display:block;
+    width:100%;
+    margin:12px 0;
+}
+.hidden{
+    display:none;
+}
+select{
+    padding:12px;
+    width:100%;
+    border-radius:10px;
+    margin-top:10px;
+    margin-bottom:20px;
+}
+input{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    margin-bottom:15px;
+}
+</style>
+</head>
+<body>
+<div class="container" id="page1">
+<h1>A Very Important Question 💕</h1>
+<input id="nameInput" placeholder="Your Name">
+<p id="question">
+    Will you go on a date with me?
+</p>
+<button id="yesBtn">Yes 😊</button>
+<button id="noBtn">No 😅</button>
+</div>
+<div class="container hidden" id="page2">
+<h1>Excellent Choice 🎉</h1>
+<p>Now choose when you'd like our legendary first date.</p>
+<select id="dateChoice">
+    <option>Friday</option>
+    <option>Saturday</option>
+    <option>Sunday</option>
+</select>
+<select id="activityChoice">
+    <option>Go watch a movie 🎬</option>
+    <option>Grab dinner 🍽️</option>
+    <option>Grab a drink 🍹</option>
+    <option>Go to a pier 🌊</option>
+</select>
+<button onclick="finishDate()">
+    Submit
+</button>
+</div>
+<div class="container hidden" id="page3">
+<h1>It's Official ❤️</h1>
+<p id="finalMessage"></p>
+</div>
+<script>
+let noClicks = 0;
+const messages = [
+    "⚠️ Incorrect answer detected.",
+    "🤔 Let's try that again.",
+    "🚨 The committee rejected your choice.",
+    "😅 Be serious.",
+    "📋 Recalculating options...",
+    "🚔 The Date Police have been notified.",
+    "💀 This button clearly isn't working."
+];
+const noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("click", moveButton);
+function moveButton(){
+    alert(messages[Math.min(noClicks, messages.length-1)]);
+    noClicks++;
+    const maxX = window.innerWidth - 150;
+    const maxY = window.innerHeight - 80;
+    noBtn.style.position = "absolute";
+    noBtn.style.left = Math.random()*maxX + "px";
+    noBtn.style.top = Math.random()*maxY + "px";
+    const yesBtn = document.getElementById("yesBtn");
+    let currentSize = parseFloat(
+        window.getComputedStyle(yesBtn).fontSize
+    );
+    yesBtn.style.fontSize = (currentSize + 4) + "px";
+}
+document.getElementById("yesBtn").addEventListener("click",()=>{
+    document.getElementById("page1").classList.add("hidden");
+    document.getElementById("page2").classList.remove("hidden");
+});
+function finishDate(){
+    const name =
+        document.getElementById("nameInput").value || "Future Date";
+    const date =
+        document.getElementById("dateChoice").value;
+    const activity =
+        document.getElementById("activityChoice").value;
+    document.getElementById("page2").classList.add("hidden");
+    document.getElementById("page3").classList.remove("hidden");
+    document.getElementById("finalMessage").innerHTML =
+        `${name} has officially agreed to a date!<br><br>
+        📅 ${date}<br>
+        🎯 ${activity}<br><br>
+        Looking forward to it ❤️`;
+}
+</script>
+</body>
+</html>
